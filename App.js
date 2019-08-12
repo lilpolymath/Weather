@@ -65,7 +65,7 @@ export default class App extends React.Component {
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <StatusBar barStyle="light-content" />
         <ImageBackground
-          source={getImageForWeather("Showers")}
+          source={getImageForWeather(weather)}
           style={styles.imageContainer}
           imageStyle={styles.image}
         >
@@ -73,9 +73,8 @@ export default class App extends React.Component {
             <ActivityIndicator animating={loading} color="white" size="large" />
             {!loading && (
               <View>
-                {" "}
                 {error && (
-                  <Text style={(styles.textStyle, styles.smallText)}>
+                  <Text style={[styles.textStyle, styles.smallText]}>
                     Error loading data, please try again later.
                   </Text>
                 )}
