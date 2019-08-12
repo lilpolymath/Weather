@@ -1,34 +1,55 @@
-import React, { Component } from "react";
-import { TextInput, StyleSheet, View } from "react-native";
+import React from "react";
+import { StyleSheet, TextInput, View } from "react-native";
 
-export class SearchInput extends Component {
+export default class SearchInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentLocation: "",
+    };
+  }
+
+  handleLocationChange = currentLocation => {
+    this.setState({ currentLocation: currentLocation });
+  };
+
+  handleLocationUpdate = () => {
+    const { onSubmit } = this.props;
+    const { currentLocation } = this.state;
+    if (!currentLocation) return;
+    onSubmit(currentLocation);
+    this.setState({ currentLocation: "" });
+  };
+  
   render() {
+    const { placeholder } = this.props;
+    const { currentLocation } = this.state;
     return (
       <View style={styles.container}>
         <TextInput
           autoCorrect={false}
-          placeholder={this.props.placeholder}
+          value={currentLocation}
+          placeholder={placeholder}
           placeholderTextColor="white"
+          underlineColorAndroid="transparent"
           style={styles.textInput}
-s          clearButtonMode="always"
+          clearButtonMode="always"
+          onChangeText={this.handleLocationChange}
+          onSubmitEditing={this.handleLocationUpdate}
         />
       </View>
     );
   }
 }
 
-export default SearchInput;
-
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#666",
-    color: "whitesmoke",
-    height: 45,
-    width: 300,
+    height: 40,
     marginTop: 20,
-    marginHorizontal: 20,
+    backgroundColor: "#666",
+    marginHorizontal: 40,
     paddingHorizontal: 10,
-    alignSelf: "center",
+    borderRadius: 5,
   },
   textInput: {
     flex: 1,
